@@ -36,3 +36,13 @@
    ```bash
    npm run dev
    ```
+
+### Swagger
+
+---
+
+After you have completed the steps above navigate to `http://localhost:8080/api-docs/#/`.
+
+> **Note:** Modify `8080` in the url above with the PORT you specified in .env file.
+
+You can also click the link displayed in your termial log when the app is running.

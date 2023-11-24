@@ -60,12 +60,15 @@ const connectDb = async () => {
 
 initServer()
   .then(() => connectDb())
-  .then(() => app.use("/", router()));
-
-const swaggerSpecs = swaggerJSDoc(swaggerConfig);
-
-app.use(
-  "/api-docs",
-  swaggerUiExpress.serve,
-  swaggerUiExpress.setup(swaggerSpecs),
-);
+  .then(() => app.use("/", router()))
+  .then(() => {
+    const swaggerSpecs = swaggerJSDoc(swaggerConfig);
+    app.use(
+      "/api-docs",
+      swaggerUiExpress.serve,
+      swaggerUiExpress.setup(swaggerSpecs),
+    );
+    console.log(
+      `To view swagger doc click this link: http://localhost:${process.env.PORT}/api-docs/#/`,
+    );
+  });
