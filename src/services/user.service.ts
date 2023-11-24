@@ -1,15 +1,34 @@
-import { UserDto } from "dto/user.dto";
 import express from "express";
-import { UserModel } from "models/user.model";
+import { UserModel } from "../models/user.model";
 
 export namespace UserService {
-  export const getAll = async (
+  export const getAll = async (req: express.Request, res: express.Response) => {
+    try {
+      const users = await UserModel.find();
+      return res.status(200).json(users);
+    } catch (error) {
+      console.log(error);
+      return res.sendStatus(400);
+    }
+  };
+
+  export const getById = async (
     req: express.Request,
     res: express.Response,
-  ): Promise<Record<string, any>> => {
+  ) => {
     try {
-      const users: UserDto[] = await UserModel.find();
-      return res.status(200).json(users);
+      const { id } = req.params;
+      if (!id) {
+        return res.sendStatus(404);
+      }
+
+      const user = await UserModel.findById(id);
+
+      if (!user) {
+        return res.sendStatus(404);
+      }
+
+      return res.status(200).json(user).end();
     } catch (error) {
       console.log(error);
       return res.sendStatus(400);
@@ -19,7 +38,7 @@ export namespace UserService {
   export const deleteUser = async (
     req: express.Request,
     res: express.Response,
-  ): Promise<Record<string, any>> => {
+  ) => {
     try {
       const { id } = req.params;
 
@@ -41,13 +60,13 @@ export namespace UserService {
       const { username } = req.body;
 
       if (!username) {
-        return res.sendStatus(400);
+        return res.sendStatus(404);
       }
 
       const user = await UserModel.findById(id);
 
       if (!user) {
-        return res.status(404);
+        return res.sendStatus(404);
       }
 
       user.username = username;
