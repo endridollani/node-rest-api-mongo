@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import { UserDto } from "../dto/user.dto";
 
-const UserSchema = new mongoose.Schema<UserDto>({
+const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
   authentication: {
