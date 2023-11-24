@@ -6,7 +6,10 @@ import cookieParser from "cookie-parser";
 import compression from "compression";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 import router from "./router";
+import swaggerConfig from "./swagger.config";
 
 dotenv.config();
 
@@ -58,3 +61,11 @@ const connectDb = async () => {
 initServer()
   .then(() => connectDb())
   .then(() => app.use("/", router()));
+
+const swaggerSpecs = swaggerJSDoc(swaggerConfig);
+
+app.use(
+  "/api-docs",
+  swaggerUiExpress.serve,
+  swaggerUiExpress.setup(swaggerSpecs),
+);
