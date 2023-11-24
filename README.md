@@ -19,7 +19,7 @@
    npm i
    ```
 
-2. Login or Register to [MongoDb Atlas](https://www.mongodb.com/cloud/atlas/register)
+2. Login or Register to [MongoDb Atlas](https://www.mongodb.com/cloud/atlas/register){:target="\_blank"}
 
 3. Create a cluster and copy connection string
 
