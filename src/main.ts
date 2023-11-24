@@ -2,8 +2,8 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 import router from "./router";
 
 dotenv.config();
@@ -36,6 +36,7 @@ const connectDb = async () => {
   try {
     mongoose.Promise = Promise;
 
+    mongoose.connect(process.env.DB_CONNECTION_STRING as string);
     mongoose.connect(process.env.DB_CONNECTION_STRING as string);
 
     mongoose.connection.on("connected", () =>
