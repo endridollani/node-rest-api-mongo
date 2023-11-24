@@ -4,7 +4,7 @@
     <img src="https://skillicons.dev/icons?i=express,nodejs,mongo,typescript" />
   </a>
   <p align="center">
-    REST API with authentication and UI
+    REST API with user authentication.
   </p>
 </p>
 <br />
