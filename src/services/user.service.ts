@@ -78,4 +78,19 @@ export namespace UserService {
       return res.sendStatus(400);
     }
   };
+
+  export const getBySessionToken = async (
+    sessionToken: string,
+    res: express.Response,
+  ) => {
+    const user = await UserModel.findOne({
+      "authentication.sessionToken": sessionToken,
+    });
+
+    if (!user) {
+      res.sendStatus(404);
+    }
+
+    return user;
+  };
 }

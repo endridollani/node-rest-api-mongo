@@ -20,4 +20,9 @@ export namespace UserController {
     req: express.Request,
     res: express.Response,
   ) => await UserService.deleteUser(req, res);
+
+  export const getBySessionToken = async (
+    sessionToken: string,
+    res: express.Response,
+  ) => await UserService.getBySessionToken(sessionToken, res);
 }
