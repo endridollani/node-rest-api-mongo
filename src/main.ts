@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import router from "./router";
 
 dotenv.config();
 
@@ -17,51 +18,39 @@ app.use(
 
 app.use(bodyParser.json());
 
-/**
- * @async
- * @description Inits server running on the port specified in .env
- */
 const initServer = async () => {
-  console.log("Initializing server...");
+  console.log("Initializing server... ");
   try {
     const server = http.createServer(app);
 
-    server.listen(process.env.PORT, () => {
-      console.log("Server is running on port: " + process.env.PORT);
-    });
-  } catch (e) {
-    console.log(
-      `Server initialization on port ${process.env.PORT} failed: \n${e}`,
+    server.listen(process.env.PORT, () =>
+      console.log("Server is running on port: " + process.env.PORT),
     );
+  } catch (e) {
+    console.log("Error running server on port: " + process.env.PORT);
   }
 };
 
-/**
- * @async
- * @description Connects to MongoDb Atlas
- */
 const connectDb = async () => {
-  console.log("Connecting to MongoDb Atlas...");
-
+  console.log("Connecting with MongoDB Atlas... ");
   try {
     mongoose.Promise = Promise;
 
     mongoose.connect(process.env.DB_CONNECTION_STRING as string);
+    mongoose.connect(process.env.DB_CONNECTION_STRING as string);
 
-    mongoose.connection.on("connected", () => {
-      console.log("MongoDB Atlas connected successfully!");
-    });
+    mongoose.connection.on("connected", () =>
+      console.log("MongoDB Atlas connected successfully!"),
+    );
 
-    mongoose.connection.on("disconnected", () => {
-      console.log("MongoDB Atlas disconnected.");
-    });
-
-    mongoose.connection.on("error", (error: Error) => {
-      console.log(`MongoDB Atlas connection error: ${error}`);
-    });
+    mongoose.connection.on("disconnected", () =>
+      console.log("MongoDB Atlas disconnected."),
+    );
   } catch (e) {
-    console.log(`MongoDB Atlas connection error: ${e}`);
+    console.log("Connecting with MongoDB Atlas failed: ");
   }
 };
 
-initServer().then(() => connectDb());
+initServer()
+  .then(() => connectDb())
+  .then(() => app.use("/", router()));
