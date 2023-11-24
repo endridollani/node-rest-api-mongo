@@ -2,6 +2,8 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import compression from "compression";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import router from "./router";
@@ -16,6 +18,8 @@ app.use(
   }),
 );
 
+app.use(compression());
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 const initServer = async () => {
